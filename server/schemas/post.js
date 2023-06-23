@@ -55,5 +55,27 @@ export default defineType({
       title: 'Categories',
       type: 'string',
     }),
+    defineField({
+      name: 'users',
+      title: 'Users',
+      type: 'reference',
+      to: { type: 'users' }
+    }),
+    defineField({
+      name: 'comments',
+      title: 'Comments',
+      type: 'array',
+      of: [
+        { type: 'reference', to: [{ type: 'comments' }] }
+      ]
+    }),
+    defineField({
+      name: 'collections',
+      title: 'Collections',
+      type: 'array',
+      of: [
+        { type: 'reference', to: [{ type: 'users' }] }
+      ]
+    }),
   ],
 })
