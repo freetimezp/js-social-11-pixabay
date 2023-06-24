@@ -3,4 +3,5 @@ https://www.youtube.com/watch?v=cAuf03Aez0M
 https://www.sanity.io/studio
 https://pixabay.com/
 https://tailwindcss.com/
+https://console.firebase.google.com/
 

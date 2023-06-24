@@ -1,14 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Header } from './components';
 import { HomeContainer } from './containers';
 
+import { firebaseAuth } from './config/firebase.config';
+import { createNewUser } from './sanity';
+
 import './App.css';
 
 const App = () => {
+  useEffect(() => {
+    firebaseAuth.onAuthStateChanged(result => {
+      if (result) {
+        //console.log("User", result?.providerData[0]);
+        createNewUser(result?.providerData[0]).then(() => {
+          console.log("new user created");
+        });
+      }
+    });
+  }, []);
+
   return (
-    <div className="w-screen h-screen flex flex-col items-center justify-start">
+    <div className="w-screen min-h-screen flex flex-col items-center justify-start">
       <Header />
 
       <main className='w-full h-full flex items-center justify-center'>
