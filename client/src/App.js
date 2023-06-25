@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Header, MainLoader } from './components';
-import { HomeContainer } from './containers';
+import { HomeContainer, NewPost } from './containers';
 
 import { firebaseAuth } from './config/firebase.config';
 import { createNewUser } from './sanity';
@@ -46,6 +46,7 @@ const App = () => {
           <main className='w-full h-full flex items-center justify-center'>
             <Routes>
               <Route path="/*" element={<HomeContainer />} />
+              <Route path="/newPost/*" element={<NewPost />} />
             </Routes>
           </main>
         </>
