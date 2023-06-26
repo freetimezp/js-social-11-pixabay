@@ -28,3 +28,29 @@ export const createNewUser = async (data) => {
         return result;
     });
 }
+
+export const uploadAsset = async (asset) => {
+    let data;
+
+    if (["image/jpg", "image/jpeg", "image/png", "image/gif"].includes(asset.type)) {
+        data = await client.assets.upload("image", asset, {
+            contentType: asset.Type,
+            filename: asset.name,
+        });
+
+        return data;
+    } else {
+        data = await client.assets.upload("file", asset, {
+            contentType: asset.Type,
+            filename: asset.name,
+        });
+
+        return data;
+    }
+}
+
+export const deleteUploadedAsset = async (id) => {
+    let data = await client.delete(id);
+
+    return data;
+}
