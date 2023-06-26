@@ -17,3 +17,28 @@ export const subMenu = [
     { id: uuidv4(), name: "Messages", slug: "messages" },
 ];
 
+export const categoriesList = [
+    { id: uuidv4(), name: "nature" },
+    { id: uuidv4(), name: "girl" },
+    { id: uuidv4(), name: "happy" },
+    { id: uuidv4(), name: "photo" },
+    { id: uuidv4(), name: "illustration" },
+    { id: uuidv4(), name: "music" },
+    { id: uuidv4(), name: "video" },
+    { id: uuidv4(), name: "gif" },
+    { id: uuidv4(), name: "anime" },
+    { id: uuidv4(), name: "background" },
+    { id: uuidv4(), name: "sky" },
+    { id: uuidv4(), name: "money" },
+    { id: uuidv4(), name: "water" },
+    { id: uuidv4(), name: "cat" },
+    { id: uuidv4(), name: "baby" },
+    { id: uuidv4(), name: "dog" },
+    { id: uuidv4(), name: "food" },
+    { id: uuidv4(), name: "car" },
+    { id: uuidv4(), name: "flower" },
+    { id: uuidv4(), name: "artifact" },
+    { id: uuidv4(), name: "wallpaper" },
+    { id: uuidv4(), name: "travel" },
+];
+
