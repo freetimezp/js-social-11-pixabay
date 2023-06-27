@@ -8,6 +8,7 @@ import { categoriesList } from '../utils/supports';
 
 import { BiCloudUpload } from 'react-icons/bi';
 import { FaTrash } from 'react-icons/fa';
+import { AiOutlineClear, AiFillCloseCircle } from 'react-icons/ai';
 import { Spinner } from '../components';
 import { deleteUploadedAsset, uploadAsset } from '../sanity';
 
@@ -17,6 +18,8 @@ const CreatePost = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [asset, setAsset] = useState(null);
     const [alert, setAlert] = useState(null);
+    const [keywords, setKeywords] = useState("");
+    const [tags, setTags] = useState([]);
 
     const handleFileSelect = async (event) => {
         setIsLoading(true);
@@ -69,6 +72,14 @@ const CreatePost = () => {
         });
     }
 
+    const handleKeyUp = async (event) => {
+        if (event.key === "Enter") {
+            setTags(keywords.split(","));
+            setKeywords("");
+            console.log(tags);
+        }
+    }
+
     return (
         <div className='w-full h-auto items-center justify-start flex-col gap-4'>
             {/* alert notification */}
@@ -87,7 +98,7 @@ const CreatePost = () => {
                 type="text"
                 placeholder="Your post title type here"
                 className='w-full px-4 py-3 rounded-md border border-gray-300 shadow-inner 
-                text-lg text-primary font-semibold focus:border-blue-400 outline-none'
+                text-lg text-primary font-semibold focus:border-blue-500 outline-none'
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
             />
@@ -176,7 +187,50 @@ const CreatePost = () => {
 
 
             {/* keywords section */}
-
+            <div className='w-full flex flex-col items-center justify-center gap-4 mt-4'>
+                <div className='w-full flex flex-col items-center justify-center gap-4 relative'>
+                    <input
+                        type="text"
+                        placeholder='Type your Tags here separated by comma'
+                        value={keywords}
+                        onChange={(e) => setKeywords(e.target.value)}
+                        className='w-full px-4 py-3 rounded-md border border-gray-300 shadow-inner
+                        text-lg text-primary font-semibold focus:border-blue-500 outline-none'
+                        onKeyUp={handleKeyUp}
+                    />
+                    <AiOutlineClear
+                        className='absolute top-7 right-3 text-2xl text-primary cursor-pointer 
+                        hover:scale-110 hover:text-red-700 transition-all duration-150'
+                        onClick={() => {
+                            setKeywords("");
+                            setTags([]);
+                        }}
+                    />
+                </div>
+                {tags.length > 0 && (
+                    <div className='w-full h-auto p-4 flex items-center justify-start flex-wrap border
+                    border-dashed rounded-md border-gray-300 gap-4'>
+                        {tags?.map((tag, i) => (
+                            <div
+                                key={i}
+                                className='flex items-center justify-center gap-2 px-2 py-1 rounded-md
+                                border border-gray-300 border-dashed shadow-inner hover:bg-gray-200 
+                                cursor-pointer'
+                            >
+                                <p>
+                                    {tag}
+                                </p>
+                                <AiFillCloseCircle
+                                    className='text-lg text-primary cursor-pointer'
+                                    onClick={() => {
+                                        setTags(tags.filter((value) => value !== tag))
+                                    }}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
 
 
             {/* description */}
