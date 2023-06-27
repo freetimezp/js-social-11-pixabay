@@ -10,7 +10,8 @@ import { BiCloudUpload } from 'react-icons/bi';
 import { FaTrash } from 'react-icons/fa';
 import { AiOutlineClear, AiFillCloseCircle } from 'react-icons/ai';
 import { Spinner } from '../components';
-import { deleteUploadedAsset, uploadAsset } from '../sanity';
+import { deleteUploadedAsset, savePost, uploadAsset } from '../sanity';
+import { useSelector } from 'react-redux';
 
 const CreatePost = () => {
     const [title, setTitle] = useState("");
@@ -20,6 +21,9 @@ const CreatePost = () => {
     const [alert, setAlert] = useState(null);
     const [keywords, setKeywords] = useState("");
     const [tags, setTags] = useState([]);
+    const [description, setDescription] = useState("");
+
+    const user = useSelector(state => state.user);
 
     const handleFileSelect = async (event) => {
         setIsLoading(true);
@@ -76,7 +80,92 @@ const CreatePost = () => {
         if (event.key === "Enter") {
             setTags(keywords.split(","));
             setKeywords("");
-            console.log(tags);
+            //console.log(tags);
+        }
+    }
+
+    const saveData = async () => {
+        if (!title || !asset || !category || !tags) {
+            setAlert("Required fields are missing..");
+            setInterval(() => {
+                setAlert(null);
+            }, 2000);
+        } else {
+            if (asset?.mimeType.split("/")[0] === "image") {
+                //create post for saving
+                const doc = {
+                    _type: "post",
+                    title: title,
+                    keywords: tags,
+                    description: description,
+                    filesource: asset?.mimeType.split("/")[0] === "image" ? "image" : "others",
+                    mainImage: {
+                        _type: "mainImage",
+                        asset: {
+                            _type: "reference",
+                            _ref: asset?._id,
+                        }
+                    },
+                    categories: category,
+                    users: {
+                        _type: "reference",
+                        ref: user?.uid,
+                    }
+                };
+
+                //save post to sanity
+                await savePost(doc).then(() => {
+                    //clear all fields after saving
+                    setTitle("");
+                    setCategory(null);
+                    setKeywords("");
+                    setTags([]);
+                    setDescription("");
+                    setAsset(null);
+                    setAlert("Data saved");
+
+                    setInterval(() => {
+                        setAlert(null);
+                    }, 3000);
+                });
+            } else {
+                //create post for saving
+                const doc = {
+                    _type: "post",
+                    title: title,
+                    keywords: tags,
+                    description: description,
+                    filesource: asset?.mimeType.split("/")[0] === "image" ? "image" : "others",
+                    otherMedia: {
+                        _type: "otherMedia",
+                        asset: {
+                            _type: "reference",
+                            _ref: asset?._id,
+                        }
+                    },
+                    categories: category,
+                    users: {
+                        _type: "reference",
+                        ref: user?.uid,
+                    }
+                };
+
+                //save post to sanity
+                await savePost(doc).then(() => {
+                    //clear all fields after saving
+                    setTitle("");
+                    setCategory(null);
+                    setKeywords("");
+                    setTags([]);
+                    setDescription("");
+                    setAsset(null);
+                    setAlert("Data saved");
+
+                    setInterval(() => {
+                        setAlert(null);
+                    }, 3000);
+                });
+            }
         }
     }
 
@@ -91,7 +180,6 @@ const CreatePost = () => {
                     </p>
                 </div>
             )}
-
 
             {/* title */}
             <input
@@ -185,7 +273,6 @@ const CreatePost = () => {
                 )}
             </div>
 
-
             {/* keywords section */}
             <div className='w-full flex flex-col items-center justify-center gap-4 mt-4'>
                 <div className='w-full flex flex-col items-center justify-center gap-4 relative'>
@@ -232,12 +319,31 @@ const CreatePost = () => {
                 )}
             </div>
 
-
             {/* description */}
+            <textarea
+                type="text"
+                rows={6}
+                cols={1}
+                placeholder='Description'
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className='w-full px-4 py-3 rounded-md border border-gray-300 shadow-inner
+                text-lg text-primary font-semibold focus:border-blue-500 outline-none mt-4'
+            >
 
-
+            </textarea>
 
             {/* button */}
+            <div className='w-full flex items-center'>
+                <button
+                    className='px-4 py-2 rounded-md bg-blue-500 text-lg  
+                    cursor-pointer hover:bg-blue-600 text-white w-full lg:w-60
+                    ml-auto transition-all duration-300'
+                    onClick={saveData}
+                >
+                    Save
+                </button>
+            </div>
         </div>
     );
 };

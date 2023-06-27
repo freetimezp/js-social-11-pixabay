@@ -54,3 +54,10 @@ export const deleteUploadedAsset = async (id) => {
 
     return data;
 }
+
+export const savePost = async (doc) => {
+    await client.create(doc).then((response) => {
+        //console.log("Saved doc success: ", response);
+        return response;
+    });
+}
