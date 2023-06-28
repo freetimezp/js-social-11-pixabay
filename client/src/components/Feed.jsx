@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MdBookmarks, MdDelete } from 'react-icons/md';
 import { useSelector } from 'react-redux';
-import { deleteFeed } from '../sanity';
+import { addToCollection, deleteFeed } from '../sanity';
 
 const Feed = ({ data }) => {
     const [alreadySaved, setAlreadySaved] = useState(null);
@@ -17,6 +17,18 @@ const Feed = ({ data }) => {
             window.location.reload();
         });
     }
+
+    const saveToCollections = async (id, uid) => {
+        if (!alreadySaved) {
+            await addToCollection(id, uid).then(() => {
+                window.location.reload();
+            });
+        }
+    }
+
+    useEffect(() => {
+        setAlreadySaved(!!data?.collections?.filter((item) => item._id === user?.uid).length);
+    }, []);
 
     return (
         <div
@@ -58,10 +70,13 @@ const Feed = ({ data }) => {
                 {isHoverred && (
                     <>
                         <div className='absolute inset-x-0 top-0 px-3 py-2 flex items-center'>
-                            <div className={`w-8 h-8 rounded-md flex items-center justify-center border 
-                        ${alreadySaved ? 'border-emerald-300' : 'border-gray-100'}`}>
+                            <div
+                                className={`w-8 h-8 rounded-md flex items-center justify-center border 
+                                    ${alreadySaved ? 'border-emerald-300' : 'border-gray-100'}`}
+                                onClick={() => saveToCollections(data?._id, user?.uid)}
+                            >
                                 <MdBookmarks
-                                    className={`text-xl text-gray-100 ${alreadySaved && 'text-emerald-400'}`}
+                                    className={`text-xl  ${alreadySaved ? 'text-emerald-400' : 'text-gray-100'}`}
                                 />
                             </div>
                         </div>
