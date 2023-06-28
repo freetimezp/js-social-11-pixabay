@@ -69,4 +69,9 @@ export const fetchFeeds = async () => {
     return data;
 }
 
+export const deleteFeed = async (id) => {
+    let data = await client.delete(id);
+    return data;
+}
+
 

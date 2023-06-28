@@ -16,7 +16,7 @@ const HomeContainer = () => {
         if (!feeds) {
             setIsLoading(true);
             fetchFeeds().then((data) => {
-                console.log("Home component: fetch data: ", data);
+                //console.log("Home component: fetch data: ", data);
                 dispatch(SET_FEED(data));
 
                 setInterval(() => {

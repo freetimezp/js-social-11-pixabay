@@ -24,6 +24,7 @@ const CreatePost = () => {
     const [description, setDescription] = useState("");
 
     const user = useSelector(state => state.user);
+    //console.log(user);
 
     const handleFileSelect = async (event) => {
         setIsLoading(true);
@@ -146,7 +147,7 @@ const CreatePost = () => {
                     categories: category,
                     users: {
                         _type: "reference",
-                        ref: user?.uid,
+                        _ref: user?.uid,
                     }
                 };
 
