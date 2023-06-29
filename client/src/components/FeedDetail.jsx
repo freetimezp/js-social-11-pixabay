@@ -6,6 +6,7 @@ import { addToCollection, fetchFeedDetail } from '../sanity';
 import { FaHeart } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { MdBookmarks } from 'react-icons/md';
+import MasonaryLayout from './MasonaryLayout';
 
 const FeedDetail = () => {
     const [feed, setFeed] = useState(null);
@@ -13,6 +14,7 @@ const FeedDetail = () => {
 
     const { _id } = useParams();
     const user = useSelector((state) => state.user);
+    const feeds = useSelector((state) => state.feeds);
 
     useEffect(() => {
         fetchFeedDetail(_id).then((data) => {
@@ -111,6 +113,65 @@ const FeedDetail = () => {
                                 <MdBookmarks className='text-xl text-white' />
                             )}
                         </div>
+                    </div>
+
+                    {feed?.keywords?.length > 0 && (
+                        <p className='text-base text-primary font-semibold'>
+                            Tags : {feed?.keywords?.map((tag, i) => (
+                                <span
+                                    className='px-1 py-[1px] mx-1 rounded-md border border-gray-200 
+                                        shadow-xl'
+                                    key={i}
+                                >
+                                    {tag}
+                                </span>
+                            ))}
+                        </p>
+                    )}
+
+                    {user && (
+                        <>
+                            {feed?.mainImage && (
+                                <a
+                                    href={`${feed?.mainImage?.asset.url}?dl`}
+                                    className='w-auto px-16 text-lg text-gray-50 font-semibold py-2 
+                                    rounded-full bg-emerald-500 hover:shadow-md hover:bg-emerald-600
+                                    transition-all duration-200'
+                                >
+                                    Free Download
+                                </a>
+                            )}
+                            {feed?.otherMedia && (
+                                <a
+                                    href={`${feed?.otherMedia?.asset.url}?dl`}
+                                    className='w-auto px-16 text-lg text-gray-50 font-semibold py-2 
+                                    rounded-full bg-emerald-500 hover:shadow-md hover:bg-emerald-600
+                                    transition-all duration-200'
+                                >
+                                    Free Download
+                                </a>
+                            )}
+                        </>
+                    )}
+
+                    <div className='w-full h-[1px] rounded-md bg-gray-300'></div>
+
+                    <p className='text-base text-primary'>
+                        {feed?.description}
+                    </p>
+
+                    <p className='text-lg text-primary font-semibold'>
+                        Suggested Posts:
+                    </p>
+
+                    <div className='w-full items-center justify-center flex-wrap gap-3'>
+                        <MasonaryLayout
+                            isSuggestions={true}
+                            feeds={feed?.otherMedia
+                                ? feeds?.slice(0, 6).filter((item) => item.otherMedia)
+                                : feeds?.slice(0, 6).filter((item) => item.mainImage)
+                            }
+                        />
                     </div>
                 </div>
             </div>
