@@ -7,3 +7,4 @@ export { default as Spinner } from './Spinner';
 export { default as MasonaryLayout } from './MasonaryLayout';
 export { default as Feed } from './Feed';
 export { default as FeedDetail } from './FeedDetail';
+export { default as Comments } from './Comments';

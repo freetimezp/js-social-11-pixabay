@@ -2,34 +2,52 @@ import React, { useEffect, useState } from 'react';
 
 import { NewPostBg } from '../assets';
 import { useParams } from 'react-router-dom';
-import { addToCollection, fetchFeedDetail } from '../sanity';
+import { addToCollection, fetchFeedDetail, fetchFeeds } from '../sanity';
 import { FaHeart } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MdBookmarks } from 'react-icons/md';
 import MasonaryLayout from './MasonaryLayout';
+import { Comments } from '../components';
+import { SET_FEED } from '../context/actions/feedActions';
 
 const FeedDetail = () => {
     const [feed, setFeed] = useState(null);
     const [alreadySaved, setAlreadySaved] = useState(null);
 
+    const dispatch = useDispatch();
+
     const { _id } = useParams();
     const user = useSelector((state) => state.user);
     const feeds = useSelector((state) => state.feeds);
 
-    useEffect(() => {
-        fetchFeedDetail(_id).then((data) => {
+    //console.log(user);
+    //console.log(feeds);
+    //console.log(alreadySaved);
+
+    const getFeedDetail = async (feedId) => {
+        await fetchFeedDetail(feedId).then((data) => {
             setFeed(data[0]);
             //console.log(data);
         });
-    }, []);
+    }
 
     useEffect(() => {
+        if (!feeds) {
+            fetchFeeds().then((data) => {
+                //console.log("FeedDetail component: fetch data: ", data);
+                dispatch(SET_FEED(data));
+            });
+        }
+
         setAlreadySaved(!!feed?.collections?.filter((item) => item._id === user?.uid)?.length);
+        getFeedDetail(_id);
+        //console.log(feed);
     }, [alreadySaved, _id]);
 
     const saveToCollections = async (id, uid) => {
         if (!alreadySaved) {
             await addToCollection(id, uid).then(() => {
+                setAlreadySaved(true);
                 window.location.reload();
             });
         }
@@ -66,6 +84,10 @@ const FeedDetail = () => {
                                 muted
                             />
                         )}
+                    </div>
+
+                    <div className='w-full py-4 flex flex-col items-start justify-start'>
+                        <Comments feed={feed} user={user} setFeed={setFeed} />
                     </div>
                 </div>
                 <div className='flex items-start flex-col justify-start w-full gap-6'>
@@ -161,7 +183,7 @@ const FeedDetail = () => {
                     </p>
 
                     <p className='text-lg text-primary font-semibold'>
-                        Suggested Posts:
+                        Suggested Posts
                     </p>
 
                     <div className='w-full items-center justify-center flex-wrap gap-3'>
@@ -173,6 +195,21 @@ const FeedDetail = () => {
                             }
                         />
                     </div>
+                </div>
+            </div>
+
+            <div className='w-full px-12 xl:px-32 flex flex-col items-start justify-start'>
+                <p className='text-xl text-primary font-bold'>
+                    Related Posts
+                </p>
+
+                <div className='w-full items-center justify-center flex-wrap gap-3'>
+                    <MasonaryLayout
+                        feeds={feed?.otherMedia
+                            ? feeds?.filter((item) => item.otherMedia)
+                            : feeds?.filter((item) => item.mainImage)
+                        }
+                    />
                 </div>
             </div>
         </div >

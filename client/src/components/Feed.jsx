@@ -81,7 +81,7 @@ const Feed = ({ data }) => {
                             </div>
                         </div>
 
-                        {data?.keywords && (
+                        {data?.keywords.length > 0 && (
                             <div className='absolute inxet-x-0 bottom-0 px-3 py-2 flex items-center gap-1 
                             bg-gradient-to-bl from-[rgba(0,0,0,0.2)] to-[rgba(0,0,0,0.8)] 
                             flex-wrap backdrop-blur-sm w-full'>
