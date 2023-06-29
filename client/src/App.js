@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { Header, MainLoader } from './components';
+import { Header, MainLoader, FeedDetail } from './components';
 import { HomeContainer, NewPost } from './containers';
 
 import { firebaseAuth } from './config/firebase.config';
@@ -47,6 +47,7 @@ const App = () => {
             <Routes>
               <Route path="/*" element={<HomeContainer />} />
               <Route path="/newPost/*" element={<NewPost />} />
+              <Route path="/feed-detail/:_id" element={<FeedDetail />} />
             </Routes>
           </main>
         </>

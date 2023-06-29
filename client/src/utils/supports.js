@@ -83,3 +83,46 @@ export const fetchQuery = `
 }
 `;
 
+export const fetchDetailQuery = (feedId) => {
+    const query = `
+    *[_type == 'post' && _id == '${feedId}'] {
+        _id,
+        title,
+        keywords,
+        categories,
+        otherMedia {
+            asset -> {
+                url
+            }
+        },
+        mainImage {
+            asset -> {
+                url
+            }
+        },
+        description,
+        _createdAt,
+        users -> {
+            _id,
+            displayName,
+            photoURL,
+        },
+        collections[] -> {
+            _id,
+            displayName,
+            photoURL,
+        },
+        comments[] -> {
+            _id,
+            comment,
+            _createdAt,
+            users -> {
+                _id,
+                displayName,
+                photoURL,
+            },
+        }
+    }`;
+
+    return query;
+}

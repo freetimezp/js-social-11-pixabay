@@ -1,6 +1,6 @@
 import { createClient } from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
-import { fetchQuery } from './utils/supports';
+import { fetchDetailQuery, fetchQuery } from './utils/supports';
 import { v4 as uuidv4 } from 'uuid';
 
 const client = createClient({
@@ -84,3 +84,12 @@ export const addToCollection = async (id, uid) => {
         ])
         .commit();
 };
+
+export const fetchFeedDetail = async (feedId) => {
+    let query = fetchDetailQuery(feedId);
+
+    if (query) {
+        let data = await client.fetch(query);
+        return data;
+    }
+}
