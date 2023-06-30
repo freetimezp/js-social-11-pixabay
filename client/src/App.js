@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Header, MainLoader, FeedDetail } from './components';
-import { HomeContainer, NewPost } from './containers';
+import { HomeContainer, NewPost, SearchContainer } from './containers';
 
 import { firebaseAuth } from './config/firebase.config';
 import { createNewUser } from './sanity';
@@ -48,6 +48,7 @@ const App = () => {
               <Route path="/*" element={<HomeContainer />} />
               <Route path="/newPost/*" element={<NewPost />} />
               <Route path="/feed-detail/:_id" element={<FeedDetail />} />
+              <Route path="/search/:searchTerm" element={<SearchContainer />} />
             </Routes>
           </main>
         </>

@@ -9,3 +9,4 @@ export { default as Feed } from './Feed';
 export { default as FeedDetail } from './FeedDetail';
 export { default as Comments } from './Comments';
 export { default as Filter } from './Filter';
+export { default as Banner } from './Banner';
