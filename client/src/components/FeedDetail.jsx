@@ -7,7 +7,7 @@ import { FaHeart } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdBookmarks } from 'react-icons/md';
 import MasonaryLayout from './MasonaryLayout';
-import { Comments } from '../components';
+import { Comments, Filter } from '../components';
 import { SET_FEED } from '../context/actions/feedActions';
 
 const FeedDetail = () => {
@@ -64,6 +64,8 @@ const FeedDetail = () => {
                 <img src={NewPostBg} alt="banner" className='w-full h-full object-cover' />
                 <div className='absolute inset-0 bg-overlay-4'></div>
             </div>
+
+            <Filter />
 
             <div className='w-full grid grid-cols-1 lg:grid-cols-2 px-8 lg:px-12 lx:px-32 
                 py-6 gap-4'>

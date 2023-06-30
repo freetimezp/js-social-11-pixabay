@@ -1,3 +1,4 @@
+import { FaCamera, FaFire, FaHome, FaPaintBrush, FaVideo } from 'react-icons/fa';
 import { v4 as uuidv4 } from 'uuid';
 
 export const mainMenu = [
@@ -126,3 +127,21 @@ export const fetchDetailQuery = (feedId) => {
 
     return query;
 }
+
+export const filterMenu = [
+    {
+        id: uuidv4(), to: "/", label: "Home", icon: FaHome,
+    },
+    {
+        id: uuidv4(), to: "/search/photos", label: "Photos", icon: FaCamera,
+    },
+    {
+        id: uuidv4(), to: "/search/illustration", label: "Illustration", icon: FaPaintBrush,
+    },
+    {
+        id: uuidv4(), to: "/search/videos", label: "Videos", icon: FaVideo,
+    },
+    {
+        id: uuidv4(), to: "/search/gifs", label: "Gifs", icon: FaFire,
+    },
+];

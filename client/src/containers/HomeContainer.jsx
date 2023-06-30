@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BannerImage2 } from '../assets';
 import { fetchFeeds } from '../sanity';
 import { SET_FEED } from '../context/actions/feedActions';
-import { Spinner, MasonaryLayout } from '../components';
+import { Spinner, MasonaryLayout, Filter } from '../components';
 
 const HomeContainer = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -31,6 +31,8 @@ const HomeContainer = () => {
             <div className='w-screen h-420 flex items-center justify-center relative'>
                 <img src={BannerImage2} alt="banner" className='w-full h-full object-cover' />
             </div>
+
+            <Filter />
 
             {isLoading ? (
                 <div className='w-full p-12 flex items-center justify-center'>

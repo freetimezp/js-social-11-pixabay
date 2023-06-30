@@ -8,3 +8,4 @@ export { default as MasonaryLayout } from './MasonaryLayout';
 export { default as Feed } from './Feed';
 export { default as FeedDetail } from './FeedDetail';
 export { default as Comments } from './Comments';
+export { default as Filter } from './Filter';
