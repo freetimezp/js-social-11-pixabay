@@ -27,7 +27,12 @@ const FeedDetail = () => {
     const getFeedDetail = async (feedId) => {
         await fetchFeedDetail(feedId).then((data) => {
             setFeed(data[0]);
-            //console.log(data);
+            //console.log(data[0]);
+            if (data[0]?.collections?.filter((item) => item._id === user?.uid)?.length > 0) {
+                setAlreadySaved(true);
+            } else {
+                setAlreadySaved(false);
+            }
         });
     }
 
@@ -42,7 +47,7 @@ const FeedDetail = () => {
         setAlreadySaved(!!feed?.collections?.filter((item) => item._id === user?.uid)?.length);
         getFeedDetail(_id);
         //console.log(feed);
-    }, [alreadySaved, _id]);
+    }, [alreadySaved, _id, feeds, feed]);
 
     const saveToCollections = async (id, uid) => {
         if (!alreadySaved) {

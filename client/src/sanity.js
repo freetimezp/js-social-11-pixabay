@@ -7,7 +7,7 @@ const client = createClient({
     projectId: 'twzeg5g3',
     dataset: 'production',
     apiVersion: '2023-05-23',
-    //useCdn: true,
+    useCdn: false,
     token: process.env.REACT_APP_SANITY_TOKEN
 });
 
@@ -92,4 +92,27 @@ export const fetchFeedDetail = async (feedId) => {
         let data = await client.fetch(query);
         return data;
     }
+}
+
+export const addToComments = async (id, uid, comment) => {
+    const _doc = {
+        _type: "comments",
+        comment,
+        users: {
+            _type: "reference",
+            _ref: uid,
+        }
+    };
+
+    await client.create(_doc).then((com) => {
+        client.patch(id).setIfMissing({ comments: [] }).insert("after", "comments[-1]", [
+            {
+                _key: uuidv4(),
+                _type: "reference",
+                _ref: com._id,
+            }
+        ]).commit().then((res) => {
+            //console.log("New comment create: ", res);
+        });
+    });
 }
