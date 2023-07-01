@@ -10,7 +10,7 @@ const SearchContainer = () => {
     const [searchFeeds, setSearchFeeds] = useState(null);
 
     const { searchTerm } = useParams();
-    //console.log(searchTerm);
+    console.log("Search container :", searchTerm);
 
     useEffect(() => {
         setIsLoading(true);

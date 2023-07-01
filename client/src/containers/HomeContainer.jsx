@@ -25,7 +25,7 @@ const HomeContainer = () => {
         }
     }, []);
 
-    console.log("Come container:", feeds);
+    console.log("Home container:", feeds);
 
     return (
         <div className='w-full h-[5000px]'>

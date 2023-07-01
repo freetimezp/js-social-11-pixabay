@@ -22,6 +22,8 @@ const Header = () => {
     const user = useSelector(state => state.user);
     const navigate = useNavigate();
 
+    console.log("Header user :", user);
+
     const changeColor = () => {
         if (typeof window !== 'undefined') {
             if (window.scrollY >= 1) {
@@ -38,7 +40,7 @@ const Header = () => {
 
     const signWithGmail = async () => {
         await signInWithRedirect(firebaseAuth, provider).then(result => {
-            console.log("Header :", result.user.providerData[0]);
+            console.log("Header auth:", result.user.providerData[0]);
             createNewUser(result?.user?.providerData[0]).then(() => {
                 //console.log("new user created");
                 dispatch(SET_USER(result?.user?.providerData[0]));
