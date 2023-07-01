@@ -8,4 +8,6 @@ https://console.firebase.google.com/
 https://swiperjs.com/
 https://www.npmjs.com/package/react-responsive-masonry
 https://momentjs.com/
+https://js-pixabay-11.sanity.studio/
+
 

@@ -22,6 +22,8 @@ const HomeContainer = () => {
                     setIsLoading(false);
                 }, 2000);
             });
+
+            console.log(feeds)
         }
     }, []);
 
@@ -31,15 +33,15 @@ const HomeContainer = () => {
 
             <Filter />
 
-            {isLoading ? (
+            {/* {isLoading ? (
                 <div className='w-full p-12 flex items-center justify-center'>
                     <Spinner />
                 </div>
-            ) : (
-                <div className='w-full flex items-center justify-between flex-wrap gap-3 px-8 py-6'>
-                    <MasonaryLayout feeds={feeds} />
-                </div>
-            )}
+            ) : ( */}
+            <div className='w-full flex items-center justify-between flex-wrap gap-3 px-8 py-6'>
+                <MasonaryLayout feeds={feeds} />
+            </div>
+            {/* )} */}
         </div>
     );
 };

@@ -7,7 +7,7 @@ const client = createClient({
     projectId: 'twzeg5g3',
     dataset: 'production',
     apiVersion: '2023-05-23',
-    useCdn: false,
+    useCdn: true,
     token: process.env.REACT_APP_SANITY_TOKEN
 });
 
