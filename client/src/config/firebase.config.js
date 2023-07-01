@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+//import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 
 //console.log("Firebase config getAuth:", getAuth);
 
@@ -12,9 +14,13 @@ const firebaseConfig = {
     appId: process.env.REACT_APP_APPID
 };
 
-const app = getApps.length > 0 ? getApp() : initializeApp(firebaseConfig);
+const firebaseApp = getApps.length > 0 ? getApp() : initializeApp(firebaseConfig);
 //console.log("Firebase config app:", app);
-const firebaseAuth = getAuth(app);
-console.log("Firebase config firebaseAuth:", firebaseAuth);
 
-export { app, firebaseAuth };
+const provider = new GoogleAuthProvider();
+
+const firebaseAuth = getAuth(firebaseApp);
+
+//console.log("Firebase config firebaseAuth:", firebaseAuth);
+
+export { firebaseApp, firebaseAuth, provider };

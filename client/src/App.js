@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+
 import { Header, MainLoader, FeedDetail } from './components';
 import { HomeContainer, NewPost, SearchContainer } from './containers';
 
-import { firebaseAuth } from './config/firebase.config';
+import { firebaseAuth, provider } from './config/firebase.config';
 import { createNewUser } from './sanity';
 
 import { useDispatch } from 'react-redux';
@@ -14,27 +16,49 @@ import './App.css';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState(null);
 
   const dispatch = useDispatch();
+
+  const FirebaseAuthUaer = () => {
+    onAuthStateChanged(firebaseAuth, (result) => {
+      if (result) {
+        createNewUser(result?.providerData[0]).then(() => {
+          //console.log("new user created");
+          dispatch(SET_USER(result?.providerData[0]));
+        });
+      } else {
+
+        setUser(null)
+      }
+    });
+  }
 
   useEffect(() => {
     setIsLoading(true);
 
-    firebaseAuth.onAuthStateChanged(result => {
-      console.log("App i here :", result);
+    FirebaseAuthUaer();
+    console.log("App func result:", user);
 
-      if (result) {
-        //console.log("User", result?.providerData[0]);
-        createNewUser(result?.providerData[0]).then(() => {
-          //console.log("new user created");
-          dispatch(SET_USER(result?.providerData[0]));
+    setInterval(() => {
+      setIsLoading(false);
+    }, 2000);
 
-          setInterval(() => {
-            setIsLoading(false);
-          }, 2000);
-        });
-      }
-    });
+    // firebaseAuth.onAuthStateChanged(result => {
+    //   console.log("App i here :", result);
+
+    //   if (result) {
+    //     //console.log("User", result?.providerData[0]);
+    //     createNewUser(result?.providerData[0]).then(() => {
+    //       //console.log("new user created");
+    //       dispatch(SET_USER(result?.providerData[0]));
+
+    //       setInterval(() => {
+    //         setIsLoading(false);
+    //       }, 2000);
+    //     });
+    //   }
+    // });
   }, []);
 
   return (
