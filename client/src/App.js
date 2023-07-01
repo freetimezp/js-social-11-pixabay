@@ -19,10 +19,10 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    //setIsLoading(true);
+    setIsLoading(true);
 
     onAuthStateChanged(firebaseAuth, result => {
-      console.log("App i here :", result);
+      //console.log("App i here :", result);
 
       if (result) {
         //console.log("User", result?.providerData[0]);
