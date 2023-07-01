@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { NewPostBg } from '../assets';
 import { subMenu } from '../utils/supports';
 import { CreatePost, MyMedia, Collections } from '../components';
 
+import { fetchFeeds } from '../sanity';
+import { SET_FEED } from '../context/actions/feedActions';
+
 const NewPost = () => {
+    const feeds = useSelector((state) => state.feeds);
+    const dispatch = useDispatch();
+    //console.log(feeds);
+
+    useEffect(() => {
+        if (!feeds) {
+            fetchFeeds().then((data) => {
+                dispatch(SET_FEED(data));
+            });
+        }
+    }, []);
+
     return (
         <div className='w-screen h-auto flex flex-col items-center justify-center relative'>
             <div className='w-full h-340 relative'>
@@ -38,7 +54,7 @@ const NewPost = () => {
                 <div className='w-full flex flex-col items-start justify-start h-auto py-4'>
                     <Routes>
                         <Route path="/upload" element={<CreatePost />} />
-                        <Route path="/my-media" element={<MyMedia />} />
+                        <Route path="/my-media" element={<MyMedia feeds={feeds} />} />
                         <Route path="/collections" element={<Collections />} />
                     </Routes>
                 </div>
