@@ -22,7 +22,7 @@ const Header = () => {
     const user = useSelector(state => state.user);
     const navigate = useNavigate();
 
-    console.log("Header user :", user);
+    //console.log("Header user :", user);
 
     const changeColor = () => {
         if (typeof window !== 'undefined') {

@@ -5,7 +5,7 @@ import { filterMenu } from '../utils/supports';
 
 const Filter = () => {
     const [isActive, setIsActive] = useState("Home");
-    console.log("Filter :", filterMenu);
+    //console.log("Filter :", filterMenu);
 
     return (
         <div className='flex items-start justify-start xl:items-center xl:justify-center 
