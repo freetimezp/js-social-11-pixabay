@@ -22,10 +22,10 @@ const HomeContainer = () => {
                     setIsLoading(false);
                 }, 2000);
             });
-
-            console.log(feeds)
         }
     }, []);
+
+    console.log("Come container:", feeds);
 
     return (
         <div className='w-full h-[5000px]'>

@@ -38,7 +38,7 @@ const Header = () => {
 
     const signWithGmail = async () => {
         await signInWithRedirect(firebaseAuth, provider).then(result => {
-            //console.log(result.user.providerData[0]);
+            console.log("Header :", result.user.providerData[0]);
             createNewUser(result?.user?.providerData[0]).then(() => {
                 //console.log("new user created");
                 dispatch(SET_USER(result?.user?.providerData[0]));
