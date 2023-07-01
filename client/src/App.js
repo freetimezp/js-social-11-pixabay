@@ -21,6 +21,8 @@ const App = () => {
     setIsLoading(true);
 
     firebaseAuth.onAuthStateChanged(result => {
+      console.log("App i here :", result);
+
       if (result) {
         //console.log("User", result?.providerData[0]);
         createNewUser(result?.providerData[0]).then(() => {

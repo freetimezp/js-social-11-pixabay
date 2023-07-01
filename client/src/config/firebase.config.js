@@ -1,7 +1,7 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
-console.log("Firebase config getAuth:", getAuth);
+//console.log("Firebase config getAuth:", getAuth);
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -13,7 +13,8 @@ const firebaseConfig = {
 };
 
 const app = getApps.length > 0 ? getApp() : initializeApp(firebaseConfig);
-console.log("Firebase config app:", app);
+//console.log("Firebase config app:", app);
 const firebaseAuth = getAuth(app);
+console.log("Firebase config firebaseAuth:", firebaseAuth);
 
 export { app, firebaseAuth };
