@@ -11,6 +11,7 @@ import { createNewUser } from './sanity';
 import { SET_USER } from './context/actions/userActions';
 
 import './App.css';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +21,7 @@ const App = () => {
   useEffect(() => {
     //setIsLoading(true);
 
-    firebaseAuth.onAuthStateChanged(result => {
+    onAuthStateChanged(firebaseAuth, result => {
       console.log("App i here :", result);
 
       if (result) {
