@@ -20,11 +20,12 @@ const App = () => {
 
   const dispatch = useDispatch();
 
-  const FirebaseAuthUaer = () => {
-    onAuthStateChanged(firebaseAuth, (result) => {
+  const FirebaseAuthUser = () => {
+    const response = onAuthStateChanged(firebaseAuth, (result) => {
+      console.log("App func onAuthStateChanged:", result);
       if (result) {
         createNewUser(result?.providerData[0]).then(() => {
-          //console.log("new user created");
+          console.log("new user created");
           dispatch(SET_USER(result?.providerData[0]));
         });
       } else {
@@ -32,13 +33,14 @@ const App = () => {
         setUser(null)
       }
     });
+
+    return response;
   }
 
   useEffect(() => {
     setIsLoading(true);
 
-    FirebaseAuthUaer();
-    console.log("App func result:", user);
+    FirebaseAuthUser().then((res) => console.log("App response", res));
 
     setInterval(() => {
       setIsLoading(false);
