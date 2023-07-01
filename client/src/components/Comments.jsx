@@ -22,7 +22,7 @@ const Comments = ({ feed, user, setFeed }) => {
             addToComments(feed?._id, user?.uid, comment).then(() => {
                fetchFeedDetail(feed?._id).then((newData) => {
                   setFeed(newData[0]);
-                  console.log(newData[0]);
+                  //console.log(newData[0]);
 
                   fetchFeeds().then((data) => {
                      dispatch(SET_FEED(data));
